@@ -182,7 +182,7 @@ function board_to_list(str) {
 
 function board_to_string() {
   let new_board = [];
-  let point = { x: 1, y: 1 };
+  let point = {};
   let wall_row = '';
   for (let i = 0; i < hl + 2; i++) {
     wall_row += '1';
@@ -240,9 +240,13 @@ window.Logic = (function() {
         console.log('Joined successfully', resp);
       })
       .receive('error', resp => {
-        console.log('Unable to join', resp);
+        $("#error").text("error: unable to join to server");
       });
     let algo = $('#algorithm option:selected').val();
+    if(!result[1].x){
+      clear_all()
+      $("#error").text("error: where is start point?");
+    }
     channel
       .push(
         algo,
@@ -254,9 +258,8 @@ window.Logic = (function() {
       )
       .receive('ok', resp => {
         if (resp.result[0] != 'ok') {
-          console.log("fail")
           clear_all();
-          $("#error").text("error: check maze board");
+          $("#error").text("error: I can't find target");
           return;
         }
         let config = {
@@ -301,9 +304,10 @@ window.Logic = (function() {
             clearInterval(colorize);
           }
         }, 30000 / (vl * hl));
+        return;
       })
-      .receive('error', reasons => console.log('create failed', reasons))
-      .receive('timeout', () => console.log('Networking issue...'));
+      .receive('error', r => $("#error").text("error: " + r))
+      .receive('timeout', () => $("#error").text("error: timeout. choose lower length and check board, then try again."));
   };
 
   let sample1 = () => {
