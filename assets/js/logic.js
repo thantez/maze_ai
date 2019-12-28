@@ -14,6 +14,8 @@ let hl = 5;
 let vl = 5;
 let board = [];
 
+let colorize, target_colorize;
+
 // init board
 let fill_board = () => {
   let col = [];
@@ -259,7 +261,7 @@ window.Logic = (function() {
         path.appendChild(path_json.render());
         es.appendChild(es_json.render());
 
-        let colorize = setInterval(() => {
+        colorize = setInterval(() => {
           let point = explored_set.pop();
           if (point) {
             let super_point = child_to_parent(point);
@@ -272,16 +274,16 @@ window.Logic = (function() {
               }
             }
           } else {
-            let target_colorize = setInterval(() => {
+            target_colorize = setInterval(() => {
               board[target.y - 1][target.x - 1].color = 4;
               target = target.parent;
               if (!target) {
                 clearInterval(target_colorize);
               }
-            }, Math.floor(60000 / (vl * hl)));
+            }, 60000 / (vl * hl));
             clearInterval(colorize);
           }
-        }, Math.floor(30000 / (vl * hl)));
+        }, 30000 / (vl * hl));
       })
       .receive('error', reasons => console.log('create failed', reasons))
       .receive('timeout', () => console.log('Networking issue...'));
