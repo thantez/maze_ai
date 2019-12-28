@@ -3,6 +3,7 @@ window.jQuery = $;
 window.$ = $;
 import * as p5 from 'p5';
 import socket from './socket';
+import JSONFormatter from 'json-formatter-js'
 
 const WIDTH = 500;
 const HEIGHT = 500;
@@ -236,9 +237,26 @@ window.Logic = (function() {
           console.log('fail');
           return;
         }
+
+        let config = {
+          hoverPreviewEnabled: true,
+          animateOpen: true,
+          animateClose: true,
+          useToJSON: true
+        }
+
         let target = resp.result[1];
         let explored_set = resp.result[2].explored_set;
-        console.log(explored_set);
+
+        let path_json = new JSONFormatter(target, 1, config);
+        let path = document.getElementById("path");
+
+        let es_json = new JSONFormatter(explored_set, 1, config);
+        let es = document.getElementById("es");
+
+        path.appendChild(path_json.render());
+        es.appendChild(es_json.render());
+
         let colorize = setInterval(() => {
           let point = explored_set.pop();
           if (point) {

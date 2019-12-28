@@ -24,3 +24,8 @@
   <p> left mouse click = wall, middle mouse click = target point, right mouse click = start point </p>
 </div>
 </center>
+<h1> Details </h1>
+  <h2> path </h2>
+    <div id="path"> </div>
+  <h2> explored_set </h2>
+    <div id="es"> </div>

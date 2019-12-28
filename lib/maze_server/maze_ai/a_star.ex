@@ -32,7 +32,7 @@ defmodule MazeServer.MazeAi.AStar do
   def h({x, y}, {end_x, end_y}) do
     d1 = abs(end_x-x)
     d2 = abs(end_y-y)
-    # :math.ceil(:math.sqrt(:math.pow(d1, 2)+:math.pow(d2, 2)))
+    # Diagonal Distance
     2 * max(d1, d2)
   end
 
