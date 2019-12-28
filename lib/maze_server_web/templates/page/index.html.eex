@@ -4,6 +4,7 @@
 </div>
 <div id="canv"></div>
 <div id="data">
+  <p id="error"></p>
   <input id="hsize" type="number" min="2" max="50" value="5">
   <input id="vsize" type="number" min="2" max="50" value="5">
   <select id="algorithm">

@@ -212,6 +212,7 @@ function child_to_parent(child) {
 
 window.Logic = (function() {
   let start = function() {
+
     let result = board_to_string();
     let channel = socket.channel('maze_socket:lobby');
     channel
@@ -234,7 +235,7 @@ window.Logic = (function() {
       )
       .receive('ok', resp => {
         if (resp.result[0] != 'ok') {
-          console.log('fail');
+          $("error").text("error: check maze board");
           return;
         }
 
