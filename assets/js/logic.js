@@ -143,7 +143,7 @@ let s = sk => {
 const P5 = new p5(s);
 
 // when point textbox changes
-$('#point').change(() => {
+$('#point').on('change input paste keyup', () => {
   let p = JSON.parse($('#point').val());
   if (p.x >= vl || p.x < 0 || p.y >= hl || p.y < 0) return;
   redundancy_clean(3);
@@ -152,7 +152,7 @@ $('#point').change(() => {
   $('#board').val(value[0]);
 });
 
-$('#board').change(() => {
+$('#board').on('change input paste keyup', () => {
   board = board_to_list($('#board').val());
 });
 
