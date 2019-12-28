@@ -12,7 +12,7 @@ defmodule MazeServer.MazeAi.IDS do
   def lds_search(limit, board, point) do
     root = MazeAi.create_point(point, board, nil, fn _, _ -> 0 end, {}, nil)
     case MazeAi.graph_search([root], [], board, "2", "1", limit,
-          &frontier_pop/1, &frontier_push/2) |> List.flatten |> IO.inspect do
+          &frontier_pop/1, &frontier_push/2) |> List.flatten do
             [:error] -> [:error]
             [:error|_] -> lds_search(limit+1, board, point)
             [:ok, target_point, explored_set|_] -> [:ok, target_point, explored_set]
