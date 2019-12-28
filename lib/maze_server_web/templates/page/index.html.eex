@@ -19,6 +19,7 @@
   <input type="submit" id="s2" value="10*10 sample" onclick="Logic.sample2()">
   <input type="submit" id="s3" value="20*20 sample" onclick="Logic.sample3()">
   <input type="submit" id="s4" value="30*15 sample" onclick="Logic.sample4()">
+  <input type="submit" id="s6" value="30*30 sample" onclick="Logic.sample6()">
   <input type="submit" id="s5" value="main sample" onclick="Logic.sample5()">
   <p> left mouse click = wall, middle mouse click = target point, right mouse click = start point </p>
 </div>

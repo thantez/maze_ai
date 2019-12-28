@@ -22,7 +22,6 @@ defmodule MazeServer.MazeAi.AStar do
   def frontier_push(frontier, point) do
     List.insert_at(frontier, -1, point)
     |> Enum.sort(fn %{path_cost: pc1}, %{path_cost: pc2} -> pc1 <= pc2 end)
-    |> IO.inspect
   end
 
   @doc """
@@ -33,7 +32,8 @@ defmodule MazeServer.MazeAi.AStar do
   def h({x, y}, {end_x, end_y}) do
     d1 = abs(end_x-x)
     d2 = abs(end_y-y)
-    d1+d2
+    # :math.ceil(:math.sqrt(:math.pow(d1, 2)+:math.pow(d2, 2)))
+    2 * max(d1, d2)
   end
 
   def g(path_cost, _) do

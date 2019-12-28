@@ -51,14 +51,15 @@ defmodule MazeServer.MazeAi do
 
   def expand(%{x: x, y: y} = point, board, frontier,
     explored_set, frontier_push, g, h, end_point, expanding) do
-    rpoint = create_point(%{x: x+1, y: y}, board, g, h, end_point, point)
-    lpoint = create_point(%{x: x-1, y: y}, board, g, h, end_point, point)
-    dpoint = create_point(%{x: x, y: y+1}, board, g, h, end_point, point)
-    upoint = create_point(%{x: x, y: y-1}, board, g, h, end_point, point)
-    expanding.(frontier, rpoint, explored_set, frontier_push)
-    |> expanding.(upoint, explored_set, frontier_push)
-    |> expanding.(dpoint, explored_set, frontier_push)
-    |> expanding.(lpoint, explored_set, frontier_push)
+    points = [create_point(%{x: x+1, y: y}, board, g, h, end_point, point),
+      create_point(%{x: x-1, y: y}, board, g, h, end_point, point),
+      create_point(%{x: x, y: y+1}, board, g, h, end_point, point),
+      create_point(%{x: x, y: y-1}, board, g, h, end_point, point)]
+    |> Enum.shuffle()
+    expanding.(frontier, Enum.at(points, 0), explored_set, frontier_push)
+    |> expanding.(Enum.at(points, 1), explored_set, frontier_push)
+    |> expanding.(Enum.at(points, 2), explored_set, frontier_push)
+    |> expanding.(Enum.at(points, 3), explored_set, frontier_push)
   end
 
   def state_maker(board, %{x: x, y: y}) do
