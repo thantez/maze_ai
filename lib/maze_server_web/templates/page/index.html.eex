@@ -1,0 +1,25 @@
+<center>
+<div id="game">
+  <p id="information"></p>
+</div>
+<div id="canv"></div>
+<div id="data">
+  <input id="hsize" type="number" min="2" max="50" value="5">
+  <input id="vsize" type="number" min="2" max="50" value="5">
+  <select id="algorithm">
+    <option value="bfs" selected>BFS</option>
+    <option value="ids">IDS</option>
+    <option value="astar">A*</option>
+  </select>
+  <input id="button" type="submit" value="start" onclick="Logic.start()">
+  <br>
+  <textarea rows="4" cols="50" id="board"></textarea>
+  <input type="text" id="point" hidden>
+  <input type="submit" id="s1" value="5*5 sample" onclick="Logic.sample1()">
+  <input type="submit" id="s2" value="10*10 sample" onclick="Logic.sample2()">
+  <input type="submit" id="s3" value="20*20 sample" onclick="Logic.sample3()">
+  <input type="submit" id="s4" value="30*15 sample" onclick="Logic.sample4()">
+  <input type="submit" id="s5" value="main sample" onclick="Logic.sample5()">
+  <p> left mouse click = wall, middle mouse click = target point, right mouse click = start point </p>
+</div>
+</center>

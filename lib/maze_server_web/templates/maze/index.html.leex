@@ -1,0 +1,18 @@
+<center>
+<div id="game">
+  <p id="information"></p>
+</div>
+<div id="canv"></div>
+<div id="data">
+<form phx-submit="<%= @event %>">
+  <%= if @status == "init" do %>
+    <input id="hsize" type="number" min="2" max="50" value="5">
+    <input id="vsize" type="number" min="2" max="50" value="5">
+    <input id="board" type="text", value="[]">
+  <% else %>
+    <p id="point"><%= @point %></p>
+    <p id="explored_set"><%= @explored_set %></p>
+  <% end %>
+  <input id="button" type="submit" value="<%= @button_text %>">
+  </form>
+</center>
