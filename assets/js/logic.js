@@ -235,10 +235,11 @@ window.Logic = (function() {
       )
       .receive('ok', resp => {
         if (resp.result[0] != 'ok') {
-          $("error").text("error: check maze board");
+          console.log("fail")
+          $("#error").text("error: check maze board");
           return;
         }
-
+        $("#error").text("");
         let config = {
           hoverPreviewEnabled: true,
           animateOpen: true,
