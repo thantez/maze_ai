@@ -5,8 +5,8 @@
 <div id="canv"></div>
 <div id="data">
   <font id="error" color="red"></font>
-  <input id="hsize" type="number" min="2" max="50" value="5">
-  <input id="vsize" type="number" min="2" max="50" value="5">
+  <lable> vertical length: </lable><input id="hsize" type="number" min="2" max="50" value="5">
+  <lable> horizontal length: </lable><input id="vsize" type="number" min="2" max="50" value="5">
   <select id="algorithm">
     <option value="bfs" selected>BFS</option>
     <option value="ids">IDS</option>
@@ -15,6 +15,11 @@
   <input id="button" type="submit" value="start" onclick="Logic.start()">
   <br>
   <textarea rows="4" cols="50" id="board"></textarea>
+  <p> for text input mode, you should make wall around main board and set correct horizontal and vertical length.
+  <br> wall = 1, target = 2, start = 3
+  <br> for example this is a 5*4 board with start in (2, 1) and end in (5, 5) [whithout any space or \n]:
+  <br> 1111111,100001,121101,100101,101101,100031,1111111
+  </p>
   <input type="text" id="point" hidden>
   <input type="submit" id="s1" value="5*5 sample" onclick="Logic.sample1()">
   <input type="submit" id="s2" value="10*10 sample" onclick="Logic.sample2()">

@@ -93,7 +93,7 @@ let s = sk => {
         if (board[i][j].color === 0) {
           sk.fill('#000');
         } else if (board[i][j].color === 1) {
-          sk.fill('#fff');
+          sk.fill('#000');
         } else if (board[i][j].color === 2) {
           sk.fill('#000');
         } else if (board[i][j].color === 3) {
