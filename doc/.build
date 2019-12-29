@@ -1,11 +1,11 @@
-dist/search_items-e8430961da.js
+dist/search_items-9d2b6e3561.js
 dist/html-de2388dc2f8074b0a4db.css
 dist/html-de2388dc2f8074b0a4db.js
 dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/sidebar_items-5dc2b288db.js
+dist/sidebar_items-1bdeaeac25.js
 api-reference.html
 readme.html
 search.html
@@ -21,9 +21,7 @@ MazeServerWeb.ErrorHelpers.html
 MazeServerWeb.ErrorView.html
 MazeServerWeb.Gettext.html
 MazeServerWeb.LayoutView.html
-MazeServerWeb.MazeLive.html
 MazeServerWeb.MazeSocketChannel.html
-MazeServerWeb.MazeView.html
 MazeServerWeb.PageController.html
 MazeServerWeb.PageView.html
 MazeServerWeb.Router.html
