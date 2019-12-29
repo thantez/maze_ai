@@ -1,6 +1,11 @@
 defmodule MazeServer.MazeAi do
   @moduledoc """
-  this is an AI for maze game
+  this is an AI for maze game that developed with elixir
+  it solve maze with this algorithms:
+  * Breadth-first search (BFS)
+  * Iterative deepening depth-first search (IDS)
+  * A* search (A Star)
+  all of this algorithms will use graph search algorithm with ** special ** frontier rules or heuristical function.
   """
 
   @doc """
@@ -34,8 +39,13 @@ defmodule MazeServer.MazeAi do
   end
 
   @doc """
-  `find_target` function when get a board, search in it then return `end_point`.
-  #Example
+  `find_target` takes a board, search for target point in it then return `end_point`.
+
+  ## Examples
+
+      iex> MazeServer.MazeAi.find_target(["111", "121", "111"])
+      {1, 1}
+
   """
   def find_target(board) do
     x = board
@@ -50,7 +60,22 @@ defmodule MazeServer.MazeAi do
 
   @doc """
   duty of `expander` is check frontier queue and explored set
-  for avoiding of redundancy and revisiting a node.
+  for avoiding of redundancy and revisiting a node and visiting a wall node.
+  it will return a new valid frontier.
+  ## Examples
+
+      iex> MazeServer.MazeAi.expander([%{x: 1, y: 2}], %{x: 1, y: 2, state: "0"}, [%{x: 4, y: 3}], fn f, p -> List.insert_at(f, -1, p) end)
+      [%{x: 1, y: 2}]
+
+      iex> MazeServer.MazeAi.expander([%{x: 2, y: 4}], %{x: 1, y: 2, state: "0"}, [%{x: 1, y: 2}], fn f, p -> List.insert_at(f, -1, p) end)
+      [%{x: 2, y: 4}]
+
+      iex> MazeServer.MazeAi.expander([%{x: 1, y: 2}], %{x: 4, y: 2, state: "1"}, [%{x: 4, y: 3}], fn f, p -> List.insert_at(f, -1, p) end)
+      [%{x: 1, y: 2}]
+
+      iex> MazeServer.MazeAi.expander([%{x: 1, y: 2}], %{x: 4, y: 2, state: "0"}, [%{x: 4, y: 3}], fn f, p -> List.insert_at(f, -1, p) end)
+      [%{x: 1, y: 2}, %{state: "0", x: 4, y: 2}]
+
   """
   def expander(frontier, point, explored_set, frontier_push) do
     unless Enum.any?(frontier, &(&1.x == point.x and &1.y == point.y)) or
@@ -62,7 +87,7 @@ defmodule MazeServer.MazeAi do
   end
 
   @doc """
-  `expand` function will use expander
+  `expand` function will create child nodes.
   """
   def expand(%{x: x, y: y} = point, board, frontier,
     explored_set, frontier_push, g, h, end_point, expanding) do
@@ -77,12 +102,15 @@ defmodule MazeServer.MazeAi do
     |> expanding.(Enum.at(points, 3), explored_set, frontier_push)
   end
 
-  def state_maker(board, %{x: x, y: y}) do
+  defp state_maker(board, %{x: x, y: y}) do
     board
     |> Enum.at(y)
     |> String.at(x)
   end
 
+  @doc """
+  it takes a location in board (x, y) and make a point node.
+  """
   def create_point(%{x: x, y: y} = point, board, _g, h, end_point, nil) do
     %{x: x, y: y, state: state_maker(board, point),
       parent: nil, path_cost: 0+h.({x, y}, end_point), level: 0}
@@ -93,7 +121,8 @@ defmodule MazeServer.MazeAi do
   end
 
   @doc """
-  `graph_search` function is base function for search on graphs for ai
+  `graph_search` function is a basical function for search on graphs.
+  it use `frontier_push` and `frontier_pop` for define frontier rules.
   """
   def graph_search(
     frontier, explored_set,
