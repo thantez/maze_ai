@@ -2,6 +2,10 @@ defmodule MazeServer.MazeAi do
   @moduledoc """
   this is an AI for maze game
   """
+
+  @doc """
+  this function will return main test board.
+  """
   def init_board do
     [
       "1111111111111111111111",
@@ -29,6 +33,10 @@ defmodule MazeServer.MazeAi do
     ]
   end
 
+  @doc """
+  `find_target` function when get a board, search in it then return `end_point`.
+  #Example
+  """
   def find_target(board) do
     x = board
     |> Enum.filter(&String.contains?(&1, "2"))
@@ -40,6 +48,10 @@ defmodule MazeServer.MazeAi do
     {x, y}
   end
 
+  @doc """
+  duty of `expander` is check frontier queue and explored set
+  for avoiding of redundancy and revisiting a node.
+  """
   def expander(frontier, point, explored_set, frontier_push) do
     unless Enum.any?(frontier, &(&1.x == point.x and &1.y == point.y)) or
     Enum.any?(explored_set, &(&1.x == point.x and &1.y == point.y)) or point.state == "1" do
@@ -49,6 +61,9 @@ defmodule MazeServer.MazeAi do
     end
   end
 
+  @doc """
+  `expand` function will use expander
+  """
   def expand(%{x: x, y: y} = point, board, frontier,
     explored_set, frontier_push, g, h, end_point, expanding) do
     points = [create_point(%{x: x+1, y: y}, board, g, h, end_point, point),

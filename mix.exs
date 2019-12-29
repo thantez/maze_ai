@@ -9,7 +9,15 @@ defmodule MazeServer.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+
+      # Docs
+      name: "Maze AI",
+      source_url: "https://gitlab.com/thantez/maze_ai",
+      homepage_url: "https://gitlab.com/thantez/maze_ai",
+      docs: [
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -39,7 +47,8 @@ defmodule MazeServer.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:phoenix_live_view, "~> 0.4.1"}
+      {:phoenix_live_view, "~> 0.4.1"},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
   end
 end
