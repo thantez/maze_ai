@@ -1,9 +1,6 @@
 defmodule MazeServer do
   @moduledoc """
-  MazeServer keeps the contexts that define your domain
-  and business logic.
-
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
+  MazeServer is a server for a maze solver with three algorithms.
+  visit our docs or test live [demo](https://mazeai.herokuapp.com/).
   """
 end
