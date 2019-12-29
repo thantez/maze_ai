@@ -1,7 +1,6 @@
 defmodule MazeServerWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :maze_server
 
-  socket "/live", Phoenix.LiveView.Socket
   socket "/socket", MazeServerWeb.UserSocket,
     websocket: [timeout: 45_000],
     longpoll: false

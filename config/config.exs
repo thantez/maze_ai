@@ -12,11 +12,7 @@ config :maze_server, MazeServerWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "XBw9P5Dk1WKt0cD8qipvJ9PAmhdxh1NaezGhP6LUT81qKOwaA4VZ40CWaDl0nvXE",
   render_errors: [view: MazeServerWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: MazeServer.PubSub, adapter: Phoenix.PubSub.PG2],
-  live_view: [
-    signing_salt: "fAblvFgaqb9lZPw2aHmq0mVYMW2ZQlNX"
-  ]
-
+  pubsub: [name: MazeServer.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
