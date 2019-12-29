@@ -1,4 +1,7 @@
 # MazeServer
+view documents of this project in (there)[https://thantez.github.io/maze_ai/]
+
+# Local Run
 
 To start your Phoenix server:
 
