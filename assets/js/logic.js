@@ -43,11 +43,11 @@ function redundancy_clean(color) {
 }
 
 // when user change table size
-$('#hsize').change(function() {
+$('#hsize').change(function () {
   hl = $('#hsize').val();
   board = fill_board();
 });
-$('#vsize').change(function() {
+$('#vsize').change(function () {
   vl = $('#vsize').val();
   board = fill_board();
 });
@@ -212,7 +212,7 @@ function child_to_parent(child) {
   }
 }
 
-function clear_all(){
+function clear_all() {
   clearInterval(colorize);
   clearInterval(target_colorize);
   $("#path").text('');
@@ -221,15 +221,15 @@ function clear_all(){
   $("#error").text("");
 }
 
-function set_length(h, v){
+function set_length(h, v) {
   hl = h;
   $("#hsize").val(hl);
   vl = v;
   $("#vsize").val(hl);
 }
 
-window.Logic = (function() {
-  let start = function() {
+window.Logic = (function () {
+  let start = function () {
     clear_all();
     $("#button").hide();
     let result = board_to_string();
@@ -243,7 +243,7 @@ window.Logic = (function() {
         $("#error").text("error: unable to join to server");
       });
     let algo = $('#algorithm option:selected').val();
-    if(!result[1].x){
+    if (!result[1].x) {
       clear_all()
       $("#error").text("error: where is start point?");
     }

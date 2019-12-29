@@ -47,14 +47,18 @@ defmodule MazeServer.MazeAi do
       {1, 1}
 
   """
-  def find_target(board) do
-    x = board
-    |> Enum.filter(&String.contains?(&1, "2"))
-    |> Enum.at(0)
-    |> String.to_charlist()
-    |> Enum.find_index(&(&1 == ?2))
-    y = board
-    |> Enum.find_index(&String.contains?(&1, "2"))
+    def find_target(board) do
+    x =
+      board
+      |> Enum.filter(&String.contains?(&1, "2"))
+      |> Enum.at(0)
+      |> String.to_charlist()
+      |> Enum.find_index(&(&1 == ?2))
+
+    y =
+      board
+      |> Enum.find_index(&String.contains?(&1, "2"))
+
     {x, y}
   end
 
@@ -79,7 +83,7 @@ defmodule MazeServer.MazeAi do
   """
   def expander(frontier, point, explored_set, frontier_push) do
     unless Enum.any?(frontier, &(&1.x == point.x and &1.y == point.y)) or
-    Enum.any?(explored_set, &(&1.x == point.x and &1.y == point.y)) or point.state == "1" do
+             Enum.any?(explored_set, &(&1.x == point.x and &1.y == point.y)) or point.state == "1" do
       frontier_push.(frontier, point)
     else
       frontier
@@ -89,13 +93,27 @@ defmodule MazeServer.MazeAi do
   @doc """
   `expand` function will create child nodes.
   """
-  def expand(%{x: x, y: y} = point, board, frontier,
-    explored_set, frontier_push, g, h, end_point, expanding) do
-    points = [create_point(%{x: x+1, y: y}, board, g, h, end_point, point),
-      create_point(%{x: x-1, y: y}, board, g, h, end_point, point),
-      create_point(%{x: x, y: y+1}, board, g, h, end_point, point),
-      create_point(%{x: x, y: y-1}, board, g, h, end_point, point)]
-    |> Enum.shuffle()
+
+  def expand(
+        %{x: x, y: y} = point,
+        board,
+        frontier,
+        explored_set,
+        frontier_push,
+        g,
+        h,
+        end_point,
+        expanding
+      ) do
+    points =
+      [
+        create_point(%{x: x + 1, y: y}, board, g, h, end_point, point),
+        create_point(%{x: x - 1, y: y}, board, g, h, end_point, point),
+        create_point(%{x: x, y: y + 1}, board, g, h, end_point, point),
+        create_point(%{x: x, y: y - 1}, board, g, h, end_point, point)
+      ]
+      |> Enum.shuffle()
+
     expanding.(frontier, Enum.at(points, 0), explored_set, frontier_push)
     |> expanding.(Enum.at(points, 1), explored_set, frontier_push)
     |> expanding.(Enum.at(points, 2), explored_set, frontier_push)
@@ -112,12 +130,32 @@ defmodule MazeServer.MazeAi do
   it takes a location in board (x, y) and make a point node.
   """
   def create_point(%{x: x, y: y} = point, board, _g, h, end_point, nil) do
-    %{x: x, y: y, state: state_maker(board, point),
-      parent: nil, path_cost: 0+h.({x, y}, end_point), level: 0}
+    %{
+      x: x,
+      y: y,
+      state: state_maker(board, point),
+      parent: nil,
+      path_cost: 0 + h.({x, y}, end_point),
+      level: 0
+    }
   end
-  def create_point(%{x: x, y: y} = point, board, g, h, end_point, %{path_cost: path_cost, level: level} = parent) do
-    %{x: x, y: y, state: state_maker(board, point),
-      parent: parent, path_cost: g.(path_cost, {x, y})+h.({x, y}, end_point), level: level+1}
+
+  def create_point(
+        %{x: x, y: y} = point,
+        board,
+        g,
+        h,
+        end_point,
+        %{path_cost: path_cost, level: level} = parent
+      ) do
+    %{
+      x: x,
+      y: y,
+      state: state_maker(board, point),
+      parent: parent,
+      path_cost: g.(path_cost, {x, y}) + h.({x, y}, end_point),
+      level: level + 1
+    }
   end
 
   @doc """
@@ -125,49 +163,93 @@ defmodule MazeServer.MazeAi do
   it use `frontier_push` and `frontier_pop` for define frontier rules.
   """
   def graph_search(
-    frontier, explored_set,
-    board, goal, wall, limit,
-    frontier_pop, frontier_push
-  )
-  when
-  is_list(frontier) and is_list(explored_set) and
-  is_bitstring(goal) and is_bitstring(wall) and is_number(limit) and
-  is_function(frontier_pop, 1) and is_function(frontier_push, 2)
-    do
-    graph_search(frontier, explored_set, {},
-      board, goal, wall, limit,
-      fn pc, _ -> pc+1 end, fn _, _ -> 0 end,
-      frontier_pop, frontier_push
+        frontier,
+        explored_set,
+        board,
+        goal,
+        wall,
+        limit,
+        frontier_pop,
+        frontier_push
+      )
+      when is_list(frontier) and is_list(explored_set) and
+             is_bitstring(goal) and is_bitstring(wall) and is_number(limit) and
+             is_function(frontier_pop, 1) and is_function(frontier_push, 2) do
+    graph_search(
+      frontier,
+      explored_set,
+      {},
+      board,
+      goal,
+      wall,
+      limit,
+      fn pc, _ -> pc + 1 end,
+      fn _, _ -> 0 end,
+      frontier_pop,
+      frontier_push
     )
   end
 
   def graph_search(
-    frontier, explored_set, end_point,
-    board, goal, wall, limit, g, h,
-    frontier_pop, frontier_push, expander \\ &expander/4
-  )
-  when
-  is_list(frontier) and is_list(explored_set) and is_tuple(end_point) and
-  is_bitstring(goal) and is_bitstring(wall) and is_number(limit) and
-  is_function(g, 2) and is_function(h, 2) and
-  is_function(frontier_pop, 1) and is_function(frontier_push, 2)
-    do
-
+        frontier,
+        explored_set,
+        end_point,
+        board,
+        goal,
+        wall,
+        limit,
+        g,
+        h,
+        frontier_pop,
+        frontier_push,
+        expander \\ &expander/4
+      )
+      when is_list(frontier) and is_list(explored_set) and is_tuple(end_point) and
+             is_bitstring(goal) and is_bitstring(wall) and is_number(limit) and
+             is_function(g, 2) and is_function(h, 2) and
+             is_function(frontier_pop, 1) and is_function(frontier_push, 2) do
     {point, new_frontier} = frontier_pop.(frontier)
-    new_explored_set = [point|explored_set]
+    new_explored_set = [point | explored_set]
+
     cond do
       point == nil ->
         [:error]
+
       point.state == goal ->
         [:ok, point, %{explored_set: new_explored_set}]
+
       point.level == limit ->
-        [graph_search(new_frontier, new_explored_set, end_point,
-            board, goal, wall, limit, g, h, frontier_pop, frontier_push), :cutoff]
+        [
+          graph_search(
+            new_frontier,
+            new_explored_set,
+            end_point,
+            board,
+            goal,
+            wall,
+            limit,
+            g,
+            h,
+            frontier_pop,
+            frontier_push
+          ),
+          :cutoff
+        ]
+
       true ->
-        expand(point, board, new_frontier, explored_set, frontier_push,
-          g, h, end_point, expander)
-          |> graph_search(new_explored_set, end_point,
-        board, goal, wall, limit, g, h,frontier_pop, frontier_push)
+        expand(point, board, new_frontier, explored_set, frontier_push, g, h, end_point, expander)
+        |> graph_search(
+          new_explored_set,
+          end_point,
+          board,
+          goal,
+          wall,
+          limit,
+          g,
+          h,
+          frontier_pop,
+          frontier_push
+        )
     end
   end
 end

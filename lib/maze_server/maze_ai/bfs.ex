@@ -25,9 +25,8 @@ defmodule MazeServer.MazeAi.BFS do
   @doc """
   BFS search function.
   """
-  def search(board \\ MazeAi.init_board, point \\ %{x: 1, y: 14}) do
-    root = MazeAi.create_point(point, board, nil,  fn _, _ -> 0 end, {}, nil)
-    MazeAi.graph_search([root], [], board, "2", "1", -1,
-      &frontier_pop/1, &frontier_push/2)
+  def search(board \\ MazeAi.init_board(), point \\ %{x: 1, y: 14}) do
+    root = MazeAi.create_point(point, board, nil, fn _, _ -> 0 end, {}, nil)
+    MazeAi.graph_search([root], [], board, "2", "1", -1, &frontier_pop/1, &frontier_push/2)
   end
 end
