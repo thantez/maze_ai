@@ -1,5 +1,6 @@
 # MazeServer
-view documents of this project in [there](https://thantez.github.io/maze_ai/)
+view documents of this project's codes in [there](https://thantez.github.io/maze_ai/)
+view a demo of app in [there](https://mazeai.herokuapp.com)
 
 # Local Run
 
@@ -13,7 +14,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Learn more
+## Learn more about tools
 
   * Official website: http://www.phoenixframework.org/
   * Guides: https://hexdocs.pm/phoenix/overview.html
