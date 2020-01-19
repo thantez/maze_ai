@@ -1,6 +1,8 @@
 # MazeServer
-view documents of this project's codes in [there](https://thantez.github.io/maze_ai/)
-view a demo of app in [there](https://mazeai.herokuapp.com)
+
+view documents of this project's codes in [there](https://thantez.github.io/maze_ai/).
+
+view a demo of app in [there](https://mazeai.herokuapp.com).
 
 # Local Run
 
